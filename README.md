@@ -2,7 +2,7 @@
 
 An interactive learning module for organic chemistry students on the conformations of cyclohexane.
 
-**Live site:** https://sunitathyagarajan.github.io/Cyclohexane-conformations-learning-module-/
+**Live site:** https://sunitathyagarajan.github.io/cyclohexane-conformations/
 
 ## What's in the module
 
