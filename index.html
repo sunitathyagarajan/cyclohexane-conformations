@@ -201,8 +201,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 .calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; }
 @media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
 .field { display: grid; gap: 0.35rem; }
-.field label { font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; display: flex; justify-content: space-between; gap: 1rem; }
-.field label output { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
+.field-head { font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; }
+.field-head output { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chip { font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 0.3rem 0.65rem; border-radius: 999px; }
 .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
@@ -388,7 +388,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     <h2>The ring flip: one chair becomes another</h2>
   </div>
   <div class="prose">
-    <p>At room temperature cyclohexane does not sit still. It interconverts between two chair forms about 10<sup>5</sup> times per second by rotating around its C–C bonds; no bonds break. The path climbs through a <strong>half-chair</strong> transition state, drops into a <strong>twist-boat</strong> intermediate, passes over the <strong>boat</strong>, and comes back down through a second half-chair to the other chair.</p>
+    <p>At room temperature cyclohexane does not sit still. It interconverts between two chair forms about 10<sup>5</sup> times per second by rotating around its C–C bonds; no bonds break. The path climbs through a <strong>half-chair</strong> transition state, drops into a <strong>twist-boat</strong> intermediate, passes over the <strong>boat</strong>, and comes back down through a second half-chair to the other chair. Most textbooks draw the route through the boat, as the model here does. Strictly, the boat is only the small hump between two twist-boats: a twist-boat can also cross a half-chair straight into the other chair.</p>
     <p>Press <em>Play</em> or drag the slider. Hydrogens keep the color they had in the starting chair, so watch what happens to the axial (orange) hydrogens by the end.</p>
   </div>
   <div class="bench">
@@ -416,7 +416,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
         </div>
         <div class="stats">
           <div class="stat"><div class="k">Energy above chair</div><div class="v" id="sE">0.0</div><div class="u" id="sEkj">kcal/mol · 0 kJ/mol</div></div>
-          <div class="stat"><div class="k">Torsion C1–C2–C3–C4</div><div class="v" id="sT">0°</div><div class="u" id="sTd">staggered</div></div>
+          <div class="stat"><div class="k">Torsion C1–C2–C3–C4</div><div class="v" id="sT">-56°</div><div class="u" id="sTd">staggered</div></div>
           <div class="stat"><div class="k" id="sDk">Flagpole H···H</div><div class="v" id="sD">4.2 Å</div><div class="u" id="sDd">no contact</div></div>
         </div>
         <div class="stage-card" aria-live="polite">
@@ -429,7 +429,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     </div>
   </div>
   <div class="prose">
-    <p><strong>Up stays up.</strong> A ring flip turns every axial position into an equatorial one and every equatorial position into an axial one. It does <em>not</em> move a group from the top face of the ring to the bottom face. Follow any orange hydrogen: it starts axial and pointing up, and ends equatorial but still on the top face. This is why <em>cis</em> and <em>trans</em> relationships in substituted cyclohexanes survive a ring flip.</p>
+    <p><strong>Up stays up.</strong> A ring flip turns every axial position into an equatorial one and every equatorial position into an axial one. It does <em>not</em> move a group from the top face of the ring to the bottom face. Follow the orange hydrogen on C1: it starts axial and pointing up, and ends equatorial but still on the top face. The orange hydrogens that start pointing down, on C2, C4 and C6, end up equatorial on the bottom face. This is why <em>cis</em> and <em>trans</em> relationships in substituted cyclohexanes survive a ring flip.</p>
     <p>Turn on the methyl group and run the flip. The methyl starts equatorial. After the flip it is axial, and the dotted lines show it crowding the axial hydrogens on C3 and C5. That is the 1,3-diaxial interaction you will put a number on in Part 4.</p>
   </div>
 </section>
@@ -552,11 +552,11 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
           <div class="chips" id="presets"></div>
         </div>
         <div class="field">
-          <label for="dG">ΔG° (less stable − more stable) <output id="dGout" for="dG"></output></label>
+          <div class="field-head"><label for="dG">ΔG° (less stable − more stable)</label><output id="dGout" for="dG"></output></div>
           <input type="range" id="dG" min="0" max="7" step="0.01" value="1.74">
         </div>
         <div class="field">
-          <label for="temp">Temperature <output id="Tout" for="temp"></output></label>
+          <div class="field-head"><label for="temp">Temperature</label><output id="Tout" for="temp"></output></div>
           <input type="range" id="temp" min="150" max="400" step="1" value="298">
         </div>
         <div class="results">
@@ -581,7 +581,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   <ul class="takeaways">
     <li><b>Chair is the ground state.</b> Near-tetrahedral angles and all-staggered bonds give it essentially no strain.</li>
     <li><b>Boat costs 6.9 kcal/mol.</b> Two eclipsed bonds and the flagpole clash. Twisting relieves part of this, so the twist-boat (5.5) is the real intermediate.</li>
-    <li><b>The flip barrier is 10.8 kcal/mol.</b> It is low enough for about 10<sup>5</sup> flips per second at 25 °C, and slow enough to freeze out near −100 °C.</li>
+    <li><b>The flip barrier is 10.8 kcal/mol.</b> It is low enough for about 10<sup>5</sup> flips per second at 25 °C, yet high enough that the flip freezes out on the NMR time scale near −100 °C.</li>
     <li><b>Flipping swaps axial and equatorial.</b> Up stays up. Bulky groups prefer equatorial by their A-value.</li>
   </ul>
 </section>
@@ -615,14 +615,17 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   const LCC = 1.54, L13 = 2.54, LCH = 1.09, HALF = 54.75 * DEG;
 
   /* ---------- Ring-flip pathway (Cremer–Pople puckering coordinates) ---------- */
+  // th, ph: Cremer–Pople angles (degrees). Q: total puckering amplitude (Å). The chair, twist-boat and boat
+  // values fit 1.54 Å bonds with ~111° angles. The half-chair is flatter, as the real transition state is:
+  // four carbons coplanar and ring torsions near 0, ±15, ∓45, ±60°.
   const NODES = [
-    { name: "Chair", th: 0, ph: 30, E: 0 },
-    { name: "Half-chair", th: 50.8, ph: 30, E: 10.8 },
-    { name: "Twist-boat", th: 90, ph: 30, E: 5.5 },
-    { name: "Boat", th: 90, ph: 0, E: 6.9 },
-    { name: "Twist-boat", th: 90, ph: -30, E: 5.5 },
-    { name: "Half-chair", th: 129.2, ph: -30, E: 10.8 },
-    { name: "Chair", th: 180, ph: -30, E: 0 }
+    { name: "Chair", th: 0, ph: 30, Q: 0.58, E: 0 },
+    { name: "Half-chair", th: 50.8, ph: 30, Q: 0.49, E: 10.8 },
+    { name: "Twist-boat", th: 90, ph: 30, Q: 0.80, E: 5.5 },
+    { name: "Boat", th: 90, ph: 0, Q: 0.80, E: 6.9 },
+    { name: "Twist-boat", th: 90, ph: -30, Q: 0.80, E: 5.5 },
+    { name: "Half-chair", th: 129.2, ph: -30, Q: 0.49, E: 10.8 },
+    { name: "Chair", th: 180, ph: -30, Q: 0.58, E: 0 }
   ];
   const NSEG = NODES.length - 1;
   const INFO = [
@@ -635,9 +638,8 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     { kind: "Energy minimum", text: "The ring has flipped. Every hydrogen that was axial is now equatorial, and every equatorial hydrogen is now axial. Each one is still on the same face of the ring." }
   ];
 
-  function zRing(th, ph) {
-    const s = Math.sin(th * DEG), Q = 0.58 + 0.22 * s * s;
-    const q2 = Q * s, q3 = Q * Math.cos(th * DEG), z = [];
+  function zRing(th, ph, Q) {
+    const q2 = Q * Math.sin(th * DEG), q3 = Q * Math.cos(th * DEG), z = [];
     for (let j = 0; j < 6; j++) z.push(Math.sqrt(1 / 3) * q2 * Math.cos(ph * DEG + (4 * Math.PI * j) / 6) + Math.sqrt(1 / 6) * q3 * (j % 2 ? -1 : 1));
     return z;
   }
@@ -646,11 +648,14 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     const k = Math.min(Math.floor(s), NSEG - 1);
     return { k, u: s - k };
   }
+  // Bonds (1,2 distances) are held stiffer than angles (1,3 distances). Where both cannot be met, near the
+  // half-chair, the angles give way, as they do in the real molecule.
+  const CONSTRAINTS = [[1, LCC, 0.25], [2, L13, 0.075]];
   function relax(x, y, z, iters) {
-    for (let n = 0; n < iters; n++) for (let i = 0; i < 6; i++) for (const [o, L] of [[1, LCC], [2, L13]]) {
+    for (let n = 0; n < iters; n++) for (let i = 0; i < 6; i++) for (const [o, L, wt] of CONSTRAINTS) {
       const k = (i + o) % 6, dz = z[i] - z[k];
       const tg = Math.sqrt(Math.max(L * L - dz * dz, 0.04));
-      const dx = x[k] - x[i], dy = y[k] - y[i], d = Math.hypot(dx, dy) || 1e-6, c = ((d - tg) / d) * 0.25;
+      const dx = x[k] - x[i], dy = y[k] - y[i], d = Math.hypot(dx, dy) || 1e-6, c = ((d - tg) / d) * wt;
       x[i] += dx * c; y[i] += dy * c; x[k] -= dx * c; y[k] -= dy * c;
     }
     let mx = 0, my = 0;
@@ -668,7 +673,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     for (let j = 0; j < 6; j++) { x.push(1.45 * Math.cos(j * 60 * DEG)); y.push(1.45 * Math.sin(j * 60 * DEG)); }
     for (let i = 0; i <= NS; i++) {
       const { k, u } = segAt(i / NS), a = NODES[k], b = NODES[k + 1];
-      const z = zRing(a.th + (b.th - a.th) * u, a.ph + (b.ph - a.ph) * u);
+      const z = zRing(a.th + (b.th - a.th) * u, a.ph + (b.ph - a.ph) * u, a.Q + (b.Q - a.Q) * u);
       relax(x, y, z, i ? 80 : 600);
       const arr = new Float32Array(18);
       for (let j = 0; j < 6; j++) { arr[j * 3] = x[j]; arr[j * 3 + 1] = y[j]; arr[j * 3 + 2] = z[j]; }
@@ -722,7 +727,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     const x = v.sub(b0, v.mul(b1, v.dot(b0, b1))), w = v.sub(b2, v.mul(b1, v.dot(b2, b1)));
     return Math.atan2(v.dot(v.cross(b1, x), w), v.dot(x, w)) / DEG;
   }
-  const z0 = zRing(0, 30);
+  const z0 = zRing(0, 30, NODES[0].Q);
   const START_ROLES = [];
   for (let j = 0; j < 6; j++) { const up = z0[j] > 0; START_ROLES.push(up ? "ax" : "eq", up ? "eq" : "ax"); }
   const BOAT_H = hydrogens(carbonsAt(0.5)).H;
@@ -732,6 +737,8 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   const ME_PARTNERS = [4 + ME_H, 8 + ME_H];                  // same-face H on C3 and C5
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
   function torsionWord(t) { const a = Math.abs(t); return a < 15 ? "eclipsed" : a < 45 ? "partly staggered" : "staggered"; }
+  // Write text only when it changes, so aria-live regions are not re-announced on every animation frame.
+  function setText(id, s) { const e = document.getElementById(id); if (e.textContent !== s) e.textContent = s; }
 
   /* ---------- 3D viewer ---------- */
   const viewers = [];
@@ -840,7 +847,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
         const j = i >> 1;
         if (i === methyl) {
           meP = v.add(C[j], v.mul(D[i], 1.54));
-          this.hM[i].visible = false; this.bond(this.ch[i], C[j], meP, 0.12);
+          this.hM[i].visible = false; this.ch[i].visible = true; this.bond(this.ch[i], C[j], meP, 0.12);
         } else if (i === f.hide) {
           this.hM[i].visible = false; this.ch[i].visible = false;
         } else {
@@ -906,9 +913,14 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   // Each viewer is created on its own, so one failed WebGL context only affects that model.
   function makeViewer(id, rot, opts) {
     if (HAS3D) { try { return new Viewer(document.getElementById(id), rot, opts); } catch (e) {} }
-    const d = document.createElement("div"); d.className = "viewer-fallback";
-    d.textContent = "This 3D model needs WebGL, which this browser has turned off. The readouts, diagrams and calculators still work.";
-    document.getElementById(id).appendChild(d);
+    const wrap = document.getElementById(id), d = document.createElement("div"); d.className = "viewer-fallback";
+    d.textContent = typeof THREE === "undefined"
+      ? "This 3D model could not load. It needs an internet connection to fetch three.js. The readouts, diagrams and calculators still work."
+      : "This 3D model needs WebGL, which this browser has turned off. The readouts, diagrams and calculators still work.";
+    // The canvas can no longer be rotated, so take it out of the tab order and drop the drag hint.
+    const cv = wrap.querySelector("canvas"); if (cv) { cv.removeAttribute("tabindex"); cv.setAttribute("aria-hidden", "true"); }
+    const hint = wrap.querySelector(".hint"); if (hint) hint.hidden = true;
+    wrap.appendChild(d);
     return null;
   }
   const vChair = makeViewer("vChair", rotCmp), vBoat = makeViewer("vBoat", rotCmp);
@@ -945,9 +957,12 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   const flipColor = document.getElementById("flipColor"), flipLabels = document.getElementById("flipLabels"), flipMe = document.getElementById("flipMe");
   const stagesEl = document.getElementById("stages");
   let T = 0, playing = false, dir = 1;
+  // Any manual jump stops playback and resets the Play button. The next Play runs forward
+  // (or backward, if the ring is already at the flipped chair).
+  function stopPlay() { playing = false; dir = 1; playBtn.textContent = "Play"; }
   NODES.forEach((n, k) => {
     const b = document.createElement("button"); b.type = "button"; b.className = "stage-btn"; b.textContent = n.name;
-    b.addEventListener("click", () => { playing = false; setT(k / NSEG); });
+    b.addEventListener("click", () => { stopPlay(); setT(k / NSEG); });
     stagesEl.appendChild(b);
   });
   function nodeE() { const E = NODES.map(n => n.E); if (flipMe.checked) E[6] = 1.74; return E; }
@@ -975,11 +990,11 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     if (methyl >= 0) {
       document.getElementById("sDk").textContent = "CH₃ to C3/C5 H";
       document.getElementById("sD").textContent = `${meD.toFixed(1)} Å`;
-      document.getElementById("sDd").textContent = meD < 3.0 ? "1,3-diaxial contact" : "no contact";
+      document.getElementById("sDd").textContent = meD < 3.0 ? "1,3-diaxial contact" : meD < 3.5 ? "near contact" : "no contact";
     } else {
       document.getElementById("sDk").textContent = "Flagpole H···H";
       document.getElementById("sD").textContent = `${fd.toFixed(1)} Å`;
-      document.getElementById("sDd").textContent = fd < 2.4 ? "too close (< 2.4 Å)" : "no contact";
+      document.getElementById("sDd").textContent = fd < 2.4 ? "too close (< 2.4 Å)" : fd < 2.75 ? "near contact" : "no contact";
     }
     const s = T * NSEG, near = Math.round(s), atNode = Math.abs(s - near) < 0.06;
     [...stagesEl.children].forEach((b, k) => { b.classList.toggle("on", k === near); b.setAttribute("aria-pressed", k === near ? "true" : "false"); });
@@ -992,15 +1007,17 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     } else {
       title = `${NODES[k].name} → ${NODES[k + 1].name}`; kind = "On the way"; text = INFO[NODES[k + 1].E > NODES[k].E ? k + 1 : k].text;
     }
-    document.getElementById("flipTag").textContent = atNode ? NODES[near].name : "In transit";
-    document.getElementById("stTitle").textContent = title;
-    document.getElementById("stKind").textContent = kind;
-    document.getElementById("stText").textContent = text;
-    document.getElementById("flipRead").textContent = flipMe.checked ? "Methyl on C1" : "";
+    setText("flipTag", atNode ? NODES[near].name : "In transit");
+    setText("stTitle", title);
+    setText("stKind", kind);
+    setText("stText", text);
+    setText("flipRead", flipMe.checked ? "Methyl on C1" : "");
+    const where = atNode ? NODES[near].name : `between ${NODES[k].name} and ${NODES[k + 1].name}`;
+    slider.setAttribute("aria-valuetext", `${where}, ${E.toFixed(1)} kcal/mol above the chair`);
     moveMarker(E);
   }
   function setT(t) { T = clamp(t, 0, 1); slider.value = Math.round(T * 1000); drawFlip(); }
-  slider.addEventListener("input", () => { playing = false; playBtn.textContent = "Play"; T = slider.value / 1000; drawFlip(); });
+  slider.addEventListener("input", () => { stopPlay(); T = slider.value / 1000; drawFlip(); });
   playBtn.addEventListener("click", () => {
     playing = !playing;
     if (playing) { if (T >= 1) dir = -1; else if (T <= 0) dir = 1; }
@@ -1049,7 +1066,7 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
       const g = el("g", { class: "node-hit", tabindex: 0, role: "button", "aria-label": `Jump to ${n.name}, ${E[k]} kcal/mol` });
       g.appendChild(el("circle", { cx: x, cy: y, r: 5, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 2, class: "ring" }));
       g.appendChild(el("circle", { cx: x, cy: y, r: 18, fill: "transparent" }));
-      const go = () => { playing = false; playBtn.textContent = "Play"; setT(k / NSEG); };
+      const go = () => { stopPlay(); setT(k / NSEG); };
       g.addEventListener("click", go);
       g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
       svg.appendChild(g);
@@ -1086,9 +1103,9 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
       why: "The reference case. An axial methyl is gauche to C3 and to C5. Each relationship costs about 0.9 kcal/mol, as in gauche butane, which predicts 1.8 kcal/mol. The measured value is 1.74." },
     { id: "Et", label: "CH₂CH₃", name: "Ethyl", A: 1.79, tree: { el: "C", kids: [CH3, "H", "H"] }, size: "CH₃ can rotate away from the ring",
       why: "Ethyl costs barely more than methyl. The CH₂ rotates so its CH₃ points away from the ring, leaving only a hydrogen over the ring, just like methyl." },
-    { id: "iPr", label: "CH(CH₃)₂", name: "Isopropyl", A: 2.21, tree: { el: "C", kids: [CH3, CH3, "H"] }, size: "Its one C–H can still point inward",
-      why: "Isopropyl can still turn its single C–H toward the ring, so the 1,3-diaxial contact looks like methyl's. The cost rises because both of its methyls are now crowded against the ring's C2 and C6 positions." },
-    { id: "Ph", label: "C₆H₅", name: "Phenyl", A: 2.8, tree: null, size: "Flat ring turns edge-on to limit contact" },
+    { id: "iPr", label: "CH(CH₃)₂", name: "Isopropyl", A: 2.21, tree: { el: "C", kids: [CH3, CH3, "H"] }, size: "C–H points inward, but rotation is locked",
+      why: "Isopropyl can still turn its single C–H toward the ring, so its 1,3-diaxial contact is no worse than methyl's. Low-temperature NMR shows its enthalpy penalty is actually a little smaller than methyl's. The extra cost is entropy: axial isopropyl is locked in this one rotation, because any other puts a methyl over the ring, while the equatorial group can turn more freely." },
+    { id: "Ph", label: "C₆H₅", name: "Phenyl", A: 2.8, tree: null, size: "Flat ring turns its face, not its edge, toward C3 and C5" },
     { id: "tBu", label: "C(CH₃)₃", name: "tert-Butyl", A: 4.9, tree: { el: "C", kids: [CH3, CH3, CH3] }, size: "One CH₃ must point into the ring",
       why: "tert-Butyl has no hydrogen to point inward. One methyl must sit over the ring and runs straight into the C3 and C5 axial hydrogens. The rigid model shows atoms overlapping; the real molecule distorts or even prefers a twist-boat. With A ≈ 4.9 kcal/mol, t-Bu is equatorial in more than 99.9% of molecules, so chemists use it to lock a ring in one chair." }
   ];
@@ -1194,15 +1211,15 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     document.getElementById("aRead").textContent = `${best.a.el}···H contact limit ${best.sum.toFixed(2)} Å`;
     document.getElementById("aVal").textContent = s.A.toFixed(2);
     document.getElementById("aValU").textContent = `kcal/mol · ${(s.A * KJ).toFixed(1)} kJ/mol`;
-    document.getElementById("aWhyT").textContent = s.name;
-    document.getElementById("aWhy").textContent = s.why;
+    setText("aWhyT", s.name);
+    setText("aWhy", s.why);
     drawAEnergy(s.A, state);
     const K = Math.exp((s.A * 1000) / (R_CAL * 298.15)), pe = K / (1 + K);
     document.getElementById("aPctEq").textContent = (pe * 100).toFixed(pe > 0.999 ? 2 : 1) + "%";
     document.getElementById("aPctAx").textContent = ((1 - pe) * 100).toFixed(pe > 0.999 ? 2 : 1) + "%";
     const be = document.getElementById("aBarEq"), ba = document.getElementById("aBarAx");
     be.style.width = pe * 100 + "%"; ba.style.width = (1 - pe) * 100 + "%";
-    be.textContent = (pe * 100).toFixed(0) + "%"; ba.textContent = 1 - pe > 0.2 ? ((1 - pe) * 100).toFixed(0) + "%" : "";
+    be.textContent = pe > 0.995 ? ">99%" : (pe * 100).toFixed(0) + "%"; ba.textContent = 1 - pe > 0.2 ? ((1 - pe) * 100).toFixed(0) + "%" : "";
     ba.classList.toggle("thin", 1 - pe < 0.08);
   }
   drawA();
@@ -1267,8 +1284,9 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
   function sci(x, digits) {
     if (x === 0) return "0";
     if (x >= 0.01 && x < 1e4) return x.toLocaleString("en-US", { maximumSignificantDigits: digits });
-    const e = Math.floor(Math.log10(x)), m = x / Math.pow(10, e);
-    return `${m.toFixed(digits - 1)} × 10<sup>${e}</sup>`;
+    let e = Math.floor(Math.log10(x)), m = (x / Math.pow(10, e)).toFixed(digits - 1);
+    if (parseFloat(m) >= 10) { e += 1; m = (x / Math.pow(10, e)).toFixed(digits - 1); }   // 9.97e4 → 1.0 × 10⁵, not 10.0 × 10⁴
+    return `${m} × 10<sup>${String(e).replace("-", "−")}</sup>`;
   }
   function timeStr(s) {
     if (s < 1e-6) return `${sci(s * 1e9, 2)} ns`;
@@ -1288,12 +1306,14 @@ footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line
     document.getElementById("rK").innerHTML = `${sci(K, 3)} <span class="muted" style="font-weight:400">(${names.ratio})</span>`;
     document.getElementById("rMajL").textContent = names.maj;
     document.getElementById("rMinL").textContent = names.min;
-    const pct = x => x > 0.9999 ? ">99.99%" : x < 0.0001 ? (x * 100).toPrecision(2) + "%" : (x * 100).toFixed(2) + "%";
-    document.getElementById("rMaj").textContent = pct(maj);
-    document.getElementById("rMin").textContent = pct(mn);
+    const pct = x => x > 0.9999 ? ">99.99%" : x < 1e-6 ? sci(x * 100, 2) + "%" : x < 0.0001 ? (x * 100).toPrecision(2) + "%" : (x * 100).toFixed(2) + "%";
+    document.getElementById("rMaj").innerHTML = pct(maj);
+    document.getElementById("rMin").innerHTML = pct(mn);
+    dG.setAttribute("aria-valuetext", `${g.toFixed(2)} kcal/mol`);
+    temp.setAttribute("aria-valuetext", `${Tk} K, ${(Tk - 273.15).toFixed(0)} °C`);
     const bm = document.getElementById("barMaj"), bn = document.getElementById("barMin");
     bm.style.width = (maj * 100) + "%"; bn.style.width = (mn * 100) + "%";
-    bm.textContent = maj > 0.25 ? names.maj + " " + (maj * 100).toFixed(1) + "%" : "";
+    bm.textContent = maj > 0.25 ? names.maj + " " + (maj > 0.9995 ? ">99.9" : (maj * 100).toFixed(1)) + "%" : "";
     bn.textContent = mn > 0.25 ? (mn * 100).toFixed(1) + "%" : "";
     bm.classList.toggle("thin", maj < 0.08); bn.classList.toggle("thin", mn < 0.08);
     const k = KB_H * Tk * Math.exp(-(10800) / (R_CAL * Tk));
